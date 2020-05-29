@@ -1,0 +1,5 @@
+aiohttp==3.6.2
+aiohttp-devtools==0.13.1
+ptvsd==4.3.2
+pylint==2.5.2
+aiohttp-debugtoolbar==0.6.0
