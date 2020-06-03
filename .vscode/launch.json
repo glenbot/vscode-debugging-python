@@ -5,17 +5,13 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Python: Remote Attach",
-            "type": "python",
-            "request": "attach",
-            "port": 5679,
-            "host": "localhost",
-            "pathMappings": [
-                {
-                    "localRoot": "${workspaceFolder}",
-                    "remoteRoot": "/workspace"
-                }
-            ]
+            "name": "Run/Debug on Kubernetes",
+            "type": "cloudcode.kubernetes",
+            "request": "launch",
+            "skaffoldConfig": "${workspaceFolder}/skaffold.yaml",
+            "watch": true,
+            "cleanUp": true,
+            "portForward": true
         }
     ]
 }

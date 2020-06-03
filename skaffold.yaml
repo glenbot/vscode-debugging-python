@@ -1,0 +1,16 @@
+apiVersion: skaffold/v2beta4
+kind: Config
+metadata:
+  name: vscode-debugging-python
+build:
+  artifacts:
+    - image: vscode-debugging-python
+  tagPolicy:
+    sha256: {}
+deploy:
+  helm:
+    releases:
+    - name: vscode-debugging-python
+      chartPath: helm/vscode-debugging-python
+      artifactOverrides:
+        image.repository: vscode-debugging-python
