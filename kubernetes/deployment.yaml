@@ -1,0 +1,21 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vscode-debugging-python
+  labels:
+    app: vscode-debugging-python
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: vscode-debugging-python
+  template:
+    metadata:
+      labels:
+        app: vscode-debugging-python
+    spec:
+      containers:
+        - name: vscode-debugging-python
+          image: "vscode-debugging-python"
+

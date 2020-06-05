@@ -4,10 +4,13 @@
 
 replicaCount: 1
 
+skaffold: "0"
 
 image:
-  repository: glenbot/vscode-debugging-python
+  repository: "glenbot/vscode-debugging-python:1.16.0"
   pullPolicy: IfNotPresent
+  # command: ["bash"]
+  # args: [""]
 
 imagePullSecrets: []
 nameOverride: ""

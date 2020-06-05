@@ -14,19 +14,43 @@ spec:
       labels:
         {{- include "vscode-debugging-python.selectorLabels" . | nindent 8 }}
     spec:
+      {{- if eq .Values.skaffold "1" }}
+      initContainers:
+      - image: gcr.io/gcp-dev-tools/duct-tape/python
+        imagePullPolicy: Always
+        name: install-python-support
+        volumeMounts:
+        - mountPath: /dbg
+          name: debugging-support-files
+      {{- end }}
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}"
-          #imagePullPolicy: {{ .Values.image.pullPolicy }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+      {{- if eq .Values.skaffold "1" }}
+          args: [
+            "/usr/local/bin/python",
+            "-mptvsd",
+            "--host",
+            "0.0.0.0",
+            "--port",
+            "5678",
+            "app.py"
+          ]
+          env:
+            - name: PYTHONUSERBASE
+              value: /dbg/python
           ports:
-            - name: http
-              containerPort: 80
+            - containerPort: 5678
+              name: dap
               protocol: TCP
-          # livenessProbe:
-          #   httpGet:
-          #     path: /
-          #     port: http
-          # readinessProbe:
-          #   httpGet:
-          #     path: /
-          #     port: http
+          volumeMounts:
+            - mountPath: /dbg
+              name: debugging-support-files
+      volumes:
+      - emptyDir: {}
+        name: debugging-support-files
+      {{- else }}
+          command: ["/bin/bash"]
+          args: ["-c", "python app.py"]
+      {{- end }}

@@ -5,12 +5,17 @@ metadata:
 build:
   artifacts:
     - image: vscode-debugging-python
-  tagPolicy:
-    sha256: {}
 deploy:
+  # kubectl:
+  #   manifests:
+  #   - kubernetes/*.yaml
   helm:
     releases:
     - name: vscode-debugging-python
       chartPath: helm/vscode-debugging-python
       artifactOverrides:
         image.repository: vscode-debugging-python
+      valuesFiles: [
+        "helm/vscode-debugging-python/values.yaml",
+        "skaffold_values.yaml"
+      ]

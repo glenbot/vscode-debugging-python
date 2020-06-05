@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: vscode-debugging-python
+spec:
+  type: NodePort
+  ports:
+    - port: 8888
+      targetPort: 8888
+      nodePort: 31005
+      protocol: TCP
+      name: http
+  selector:
+    app: vscode-debugging-python
